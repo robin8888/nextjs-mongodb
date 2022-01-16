@@ -2,11 +2,10 @@ import Error from "next/error";
 import { Grid, Confirm, Button } from "semantic-ui-react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
 export default function TaskDetail({ task, error }) {
   const { query, push } = useRouter();
-  const router = useRouter();
-  console.log(router)
+ 
+
   const [open, setopen] = useState(false);
   const openConfirm = () => {
     setopen(true);
@@ -14,14 +13,14 @@ export default function TaskDetail({ task, error }) {
   const close = () => {
     setopen(false);
   };
-  const { title, description } = task;
+  const { title, description } = task && task;
   const deleteTask = async () => {
     const { id } = query;
-   
+
     try {
-      await fetch('http://localhost:3000/api/task/'+id, {
+      await fetch("http://localhost:3000/api/task/" + id, {
         method: "DELETE",
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -29,12 +28,13 @@ export default function TaskDetail({ task, error }) {
   const handleDelete = async () => {
     deleteTask();
     close();
-    push('/')
+    push("/");
   };
   if (error && error.statusCode)
     return (
       <Error statusCode={error.statusCode} title={error.statusTex}></Error>
     );
+
 
   return (
     <Grid
@@ -54,7 +54,13 @@ export default function TaskDetail({ task, error }) {
           </div>
         </Grid.Column>
       </Grid.Row>
-      <Confirm  open={open} onCancel={close} onConfirm={handleDelete} />
+      <Confirm
+        open={open}
+        onCancel={close}
+        onConfirm={handleDelete}
+        header="Please Confirm"
+        content="Please confirm if you want to delete the task"
+      />
     </Grid>
   );
 }

@@ -12,7 +12,7 @@ export default function Home({data}) {
         <Grid.Column textAlign="center">
             <h1> No hay Tareas aun </h1>
             <Image centered src="https://cdn.iconscout.com/icon/premium/png-256-thumb/no-data-found-1965030-1662565.png" alt='no hay datos'/>
-            <Button color= 'green'>Create a Task</Button>
+            <Button color= 'green' onClick={()=>router.push('tasks/new')}>Create a Task</Button>
         </Grid.Column>
         
       </Grid.Row>
@@ -38,7 +38,9 @@ export default function Home({data}) {
                   primary>
                     View
                   </Button>
-                  <Button secondary>
+                  <Button
+                  onClick={()=> router.push(`/tasks/${_id}/editTask`)}
+                  secondary>
                     Edit
                   </Button>
                 </Card.Content>
