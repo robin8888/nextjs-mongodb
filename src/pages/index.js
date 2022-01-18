@@ -59,3 +59,4 @@ export const getServerSideProps = async (context) => {
     props: {data},
   };
 };
+
